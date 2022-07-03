@@ -46,6 +46,9 @@ class Car{
                 this.angle-=0.03*flip;
             }
         }
+        if(Math.abs(this.speed)<this.friction){
+            this.speed=0;
+        }
 
         //update x and y coordinates of car based on calculated speed and direction(angle)
         this.x-=Math.sin(this.angle)*this.speed;
