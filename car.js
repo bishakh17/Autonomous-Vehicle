@@ -1,15 +1,15 @@
 class Car{
-    constructor(x,y){
+    constructor(x,y,width=30,height=50){
         this.x=x;
         this.y=y;
-        this.width=30;
-        this.height=50;
+        this.width=width;
+        this.height=height;
         
         //gives the vehicle more natural motion
         this.speed=0;
         this.acceleration=0.4;
         this.maxSpeed=8.5;
-        this.friction=0.06;
+        this.friction=0.03;
         this.angle=0; //rotating car instead of going left and right is more natural
 
         this.controls=new Controls();
@@ -40,10 +40,10 @@ class Car{
         if(this.speed!=0){
             const flip=this.speed>0?1:-1;
             if(this.controls.left){
-                this.angle+=0.03*flip;
+                this.angle+=0.01*flip;
             }
             if(this.controls.right){
-                this.angle-=0.03*flip;
+                this.angle-=0.01*flip;
             }
         }
         if(Math.abs(this.speed)<this.friction){
