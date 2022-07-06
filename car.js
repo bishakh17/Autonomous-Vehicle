@@ -1,7 +1,9 @@
 class Car{
-    constructor(x,y,width=30,height=50){
-        this.x=x;
-        this.y=y;
+    constructor(canvas_width,width=30,height=50){
+        this.road = new Road(canvas_width/2,canvas_width*0.9);
+        this.canvas_width = canvas_width;
+        this.x=canvas_width/2;
+        this.y=0;
         this.width=width;
         this.height=height;
         
@@ -12,10 +14,12 @@ class Car{
         this.friction=0.03;
         this.angle=0; //rotating car instead of going left and right is more natural
 
-        this.controls=new Controls();
+        this.controls = new Controls();
+        this.sensor = new Sensor(this);
     }
 
     update(){
+        this.sensor.update(this.road.borders);
         this.#move();
     }
 
@@ -56,8 +60,9 @@ class Car{
     }
 
     draw(ctx){
-        ctx.save();
+        this.road.draw(ctx);
 
+        ctx.save();
         //sets center of car
         ctx.translate(this.x,this.y); 
         //rotate car
@@ -73,5 +78,6 @@ class Car{
         ctx.fill();
 
         ctx.restore();
+        this.sensor.draw(ctx);
     }
 }

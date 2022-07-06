@@ -7,7 +7,7 @@ class Road{
         this.left=x-width/2;
         this.right=x+width/2;
 
-        const infinity=1e7;
+        const infinity=1e9;
         this.top=-infinity;
         this.bottom=infinity;
 
