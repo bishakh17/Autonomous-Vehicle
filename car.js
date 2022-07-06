@@ -13,6 +13,7 @@ class Car{
         this.maxSpeed=10.5;
         this.friction=0.03;
         this.angle=0; //rotating car instead of going left and right is more natural
+        this.damaged = false;
 
         this.controls = new Controls();
         this.sensor = new Sensor(this);
@@ -40,10 +41,23 @@ class Car{
     } 
 
     update(roadBorders){
-        this.#createPolygon();
-        this.sensor.update(roadBorders);
-        this.#move();
+        this.damaged=this.#assessDamage(roadBorders);
+        if(!this.damaged){
+            this.#move();
+            this.#createPolygon();
+            this.sensor.update(roadBorders);
+        }
     }
+
+    #assessDamage(roadBorders){
+        for(let i=0;i<roadBorders.length;i++){
+            if(polysIntersect(this.polygon,roadBorders[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     #move(){
         //update and limit max speed
