@@ -1,5 +1,7 @@
 class Car{
     constructor(x,y=0,width=30,height=50){
+        this.polygon = [];
+
         this.x=x;
         this.y=y;
         this.width=width;
@@ -15,8 +17,30 @@ class Car{
         this.controls = new Controls();
         this.sensor = new Sensor(this);
     }
+    #createPolygon(){
+        this.polygon = [];
+        const rad=Math.hypot(this.width,this.height)/2;
+        const alpha=Math.atan2(this.width,this.height);
+        this.polygon.push({
+            x:this.x-Math.sin(this.angle-alpha)*rad,
+            y:this.y-Math.cos(this.angle-alpha)*rad
+        });
+        this.polygon.push({
+            x:this.x-Math.sin(this.angle+alpha)*rad,
+            y:this.y-Math.cos(this.angle+alpha)*rad
+        });
+        this.polygon.push({
+            x:this.x-Math.sin(Math.PI+this.angle-alpha)*rad,
+            y:this.y-Math.cos(Math.PI+this.angle-alpha)*rad
+        });
+        this.polygon.push({
+            x:this.x-Math.sin(Math.PI+this.angle+alpha)*rad,
+            y:this.y-Math.cos(Math.PI+this.angle+alpha)*rad
+        });
+    } 
 
     update(roadBorders){
+        this.#createPolygon();
         this.sensor.update(roadBorders);
         this.#move();
     }
@@ -58,22 +82,17 @@ class Car{
     }
 
     draw(ctx){
-        ctx.save();
-        //sets center of car
-        ctx.translate(this.x,this.y); 
-        //rotate car
-        ctx.rotate(-this.angle);
-        //draw rectangle around center
+        if(this.damaged){
+            ctx.fillStyle="gray";
+        }else{
+            ctx.fillStyle="black";
+        }
         ctx.beginPath();
-        ctx.rect(                                  
-            -this.width/2,
-            -this.height/2,
-            this.width,
-            this.height
-        );
+        ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
+        for(let i=1;i<this.polygon.length;i++){
+            ctx.lineTo(this.polygon[i].x,this.polygon[i].y);
+        }
         ctx.fill();
-
-        ctx.restore();
         this.sensor.draw(ctx);
     }
 }
