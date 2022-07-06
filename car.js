@@ -1,16 +1,14 @@
 class Car{
-    constructor(canvas_width,width=30,height=50){
-        this.road = new Road(canvas_width/2,canvas_width*0.9);
-        this.canvas_width = canvas_width;
-        this.x=canvas_width/2;
-        this.y=0;
+    constructor(x,y=0,width=30,height=50){
+        this.x=x;
+        this.y=y;
         this.width=width;
         this.height=height;
         
         //gives the vehicle more natural motion
         this.speed=0;
-        this.acceleration=0.4;
-        this.maxSpeed=8.5;
+        this.acceleration=0.5;
+        this.maxSpeed=10.5;
         this.friction=0.03;
         this.angle=0; //rotating car instead of going left and right is more natural
 
@@ -18,8 +16,8 @@ class Car{
         this.sensor = new Sensor(this);
     }
 
-    update(){
-        this.sensor.update(this.road.borders);
+    update(roadBorders){
+        this.sensor.update(roadBorders);
         this.#move();
     }
 
@@ -60,8 +58,6 @@ class Car{
     }
 
     draw(ctx){
-        this.road.draw(ctx);
-
         ctx.save();
         //sets center of car
         ctx.translate(this.x,this.y); 
