@@ -44,8 +44,8 @@ class Car{
     } 
 
     update(roadBorders,traffic){
-        this.damaged=this.#assessDamage(roadBorders,traffic);
         if(!this.damaged){
+            this.damaged=this.#assessDamage(roadBorders,traffic);
             this.#move();
             this.#createPolygon();
             if(this.carType!="TRAFFIC"){
