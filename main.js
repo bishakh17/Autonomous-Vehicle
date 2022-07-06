@@ -4,12 +4,18 @@ canvas.width=200;
 
 const ctx = canvas.getContext("2d");
 const road = new Road(canvas.width/2,canvas.width*0.9);
-const car = new Car(road.getLaneCenter(1));
+const traffic=[
+    new Car("TRAFFIC",road.getLaneCenter(1),-100,4)
+];
+const car = new Car("MAIN_KEYS",road.getLaneCenter(1));
 
 animate();
 
 function animate(){
-    car.update(road.borders);
+    for(let i=0;i<traffic.length;i++){
+        traffic[i].update(road.borders,[]);
+    }
+    car.update(road.borders,traffic);
 
     canvas.height=window.innerHeight;
     //save the context onto the stack
@@ -20,7 +26,10 @@ function animate(){
      
     //draw the snapshot of road and car after every frame
     road.draw(ctx);
-    car.draw(ctx);
+    for(let i=0;i<traffic.length;i++){
+        traffic[i].draw(ctx,"red");
+    }
+    car.draw(ctx,"blue");
 
     //restore the context from the stack
     ctx.restore();

@@ -9,21 +9,21 @@ class Sensor{
         this.readings=[]; //list containing the readings(coordinates of intersection) for each of the cast rays 
     }
 
-    update(roadBorders){
+    update(roadBorders,traffic){
         this.#castRays(); 
         this.readings=[];
         for(let i=0;i<this.rays.length;i++){//loop over each ray and find the corresponding reading
             this.readings.push(
-                this.#getReading(this.rays[i],roadBorders)
+                this.#getReading(this.rays[i],roadBorders,traffic)
             );
         }
     }
 
     //
-    #getReading(ray,roadBorders){
+    #getReading(ray,roadBorders,traffic){
         let touches=[];//list of all intersection points of obstacles and the given ray cast by the sensor
 
-        for(let i=0;i<roadBorders.length;i++){//loop over all the ray boders to get a list of all the intersection points with the given ray
+        for(let i=0;i<roadBorders.length;i++){//loop over all the road boders to get a list of all the intersection points with the given ray
             const touch=getIntersection(
                 ray[0],
                 ray[1],
@@ -32,6 +32,21 @@ class Sensor{
             );
             if(touch){
                 touches.push(touch);
+            }
+        }
+
+        for(let i=0;i<traffic.length;i++){//loop over all the traffic to get a list of all the intersection points with the given ray
+            const poly=traffic[i].polygon;
+            for(let j=0;j<poly.length;j++){
+                const value=getIntersection(
+                    ray[0],
+                    ray[1],
+                    poly[j],
+                    poly[(j+1)%poly.length]
+                );
+                if(value){
+                    touches.push(value);
+                }
             }
         }
 
