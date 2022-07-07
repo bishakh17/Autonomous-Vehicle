@@ -20,7 +20,7 @@ class Car{
             this.sensor = new Sensor(this);
         }
         if(carType=="MAIN_AI"){
-            this.brain = new Brain([this.sensor.rayCount,6,4]);
+            this.brain = new Brain([this.sensor.rayCount,3,2,4]);
         }
         this.controls = new Controls(this);
     }
