@@ -7,7 +7,7 @@ const road = new Road(canvas.width/2,canvas.width*0.9);
 const traffic=[
     new Car("TRAFFIC",road.getLaneCenter(1),-100,4)
 ];
-const car = new Car("MAIN_KEYS",road.getLaneCenter(1));
+const car = new Car("MAIN_AI",road.getLaneCenter(1));
 
 animate();
 

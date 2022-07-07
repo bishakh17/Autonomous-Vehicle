@@ -19,7 +19,10 @@ class Car{
         if(carType!="TRAFFIC"){
             this.sensor = new Sensor(this);
         }
-        this.controls = new Controls(carType);
+        if(carType=="MAIN_AI"){
+            this.brain = new Brain([this.sensor.rayCount,6,4]);
+        }
+        this.controls = new Controls(this);
     }
     #createPolygon(){
         this.polygon = [];
