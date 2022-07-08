@@ -54,6 +54,7 @@ class Car{
             if(this.carType!="TRAFFIC"){
                 this.sensor.update(roadBorders,traffic);
             }
+            this.controls = new Controls(this);
         }
     }
 

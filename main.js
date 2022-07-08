@@ -17,7 +17,7 @@ const traffic=[
     new Car("TRAFFIC",road.getLaneCenter(1),-700,2),
     new Car("TRAFFIC",road.getLaneCenter(2),-700,2),
 ];
-const N=10000;
+const N=1000;
 const cars=generateCars(N);
 let bestCar=cars[0];
 if(localStorage.getItem("bestBrain")){
@@ -25,7 +25,7 @@ if(localStorage.getItem("bestBrain")){
         cars[i].brain=JSON.parse(
             localStorage.getItem("bestBrain"));
         if(i!=0){
-            Brain.mutate(cars[i].brain,0.1);
+            Brain.mutate(cars[i].brain,0.2);
         }
     }
 }
