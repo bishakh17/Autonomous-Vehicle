@@ -11,8 +11,8 @@ class Controls{
         else if(car.carType=="TRAFFIC"){
             this.forward = true;
         }
-        else if(car.carType=="MAIN_AI"){
-            this.#addKeyboardListeners();
+        else if(car.carType=="MAIN_AI" || car.carType=="DUMMY_AI"){
+            // this.#addKeyboardListeners();
             const offsets=car.sensor.readings.map(
                 s=>s==null?0:1-s.offset
             );

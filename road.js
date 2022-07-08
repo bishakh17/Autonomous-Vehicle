@@ -29,7 +29,7 @@ class Road{
     }
 
     draw(ctx){
-        ctx.lineWidth=5;
+        ctx.lineWidth=3;
         ctx.strokeStyle="white";
 
         //draws middle lane lines
@@ -40,7 +40,7 @@ class Road{
                 i/this.laneCount
             );
             
-            ctx.setLineDash([10,10]);
+            ctx.setLineDash([20,20]);
             ctx.beginPath();
             ctx.moveTo(x,this.top);
             ctx.lineTo(x,this.bottom);

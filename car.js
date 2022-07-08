@@ -1,5 +1,5 @@
 class Car{
-    constructor(carType,x,y=0,maxSpeed = 10.5,width=30,height=50){
+    constructor(carType,x,y=0,maxSpeed = 3,width=30,height=50){
         this.polygon = [];
 
         this.carType = carType;
@@ -10,16 +10,16 @@ class Car{
         
         //gives the vehicle more natural motion
         this.speed=0;
-        this.acceleration=0.5;
+        this.acceleration=0.2;
         this.maxSpeed=maxSpeed;
-        this.friction=0.03;
+        this.friction=0.05;
         this.angle=0; //rotating car instead of going left and right is more natural
         this.damaged = false;
 
         if(carType!="TRAFFIC"){
             this.sensor = new Sensor(this);
         }
-        if(carType=="MAIN_AI"){
+        if(carType=="MAIN_AI" || carType=="DUMMY_AI"){
             this.brain = new Brain([this.sensor.rayCount,3,2,4]);
         }
         this.controls = new Controls(this);
@@ -93,10 +93,10 @@ class Car{
         if(this.speed!=0){
             const flip=this.speed>0?1:-1;
             if(this.controls.left){
-                this.angle+=0.01*flip;
+                this.angle+=0.03*flip;
             }
             if(this.controls.right){
-                this.angle-=0.01*flip;
+                this.angle-=0.03*flip;
             }
         }
         if(Math.abs(this.speed)<this.friction){
@@ -120,7 +120,7 @@ class Car{
             ctx.lineTo(this.polygon[i].x,this.polygon[i].y);
         }
         ctx.fill();
-        if(this.carType!="TRAFFIC"){
+        if(this.carType == "MAIN_AI" || this.carType == "MAIN_KEYS"){
             this.sensor.draw(ctx);
         }
     }
